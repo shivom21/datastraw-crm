@@ -1,4 +1,5 @@
 from fastapi import FastAPI, HTTPException
+from fastapi.responses import FileResponse
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 import sqlite3
@@ -105,3 +106,9 @@ def update_ticket(ticket_id: str, ticket_update: TicketUpdate):
     conn.close()
     
     return {"success": True, "updated_at": updated_at}
+
+
+# Serve the frontend HTML page
+@app.get("/")
+def read_root():
+    return FileResponse("index.html")
